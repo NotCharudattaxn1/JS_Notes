@@ -1,6 +1,6 @@
 # JavaScript Fundamentals
 > Version: 1.0
-> Suitable for: Technical Interviews, Web Development, E-Cell Technical Team
+> Suitable for: Technical Interviews, Web Development
 
 ---
 
