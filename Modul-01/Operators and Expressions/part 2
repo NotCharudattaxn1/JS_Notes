@@ -1,0 +1,696 @@
+# Module 1 - JavaScript Fundamentals
+
+# Chapter 3 - Operators and Expressions (Part 2)
+
+> **Prerequisites**
+>
+> - Python Basics
+> - C++ Basics
+> - Chapter 2 (Variables & Data Types)
+
+---
+
+# Learning Objectives
+
+After completing this chapter, you will be able to:
+
+- Compare values correctly
+- Understand JavaScript equality
+- Master `==` vs `===`
+- Use logical operators
+- Understand short-circuit evaluation
+- Write cleaner conditional statements
+
+---
+
+# If You Already Know Python or C++
+
+Comparison operators work almost the same.
+
+| Python | C++ | JavaScript |
+|---------|------|------------|
+| `==` | `==` | `==` |
+| `!=` | `!=` | `!=` |
+| `>` | `>` | `>` |
+| `<` | `<` | `<` |
+| `>=` | `>=` | `>=` |
+| `<=` | `<=` | `<=` |
+
+The biggest difference is:
+
+**JavaScript also has**
+
+```
+===
+!==
+```
+
+These are the operators professional developers use.
+
+---
+
+# Comparison Operators
+
+Comparison operators always return a Boolean value.
+
+```
+true
+
+or
+
+false
+```
+
+---
+
+## Equal (==)
+
+Checks whether two values are equal.
+
+```javascript
+console.log(10 == 10);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+```javascript
+console.log(10 == 20);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+## Loose Equality (==)
+
+Unlike Python and C++, JavaScript performs **type coercion**.
+
+Example
+
+```javascript
+console.log(5 == "5");
+```
+
+Output
+
+```
+true
+```
+
+Why?
+
+JavaScript converts
+
+```
+"5"
+
+↓
+
+5
+```
+
+before comparing.
+
+---
+
+Another example
+
+```javascript
+console.log(true == 1);
+```
+
+Output
+
+```
+true
+```
+
+Again,
+
+```
+true
+
+↓
+
+1
+```
+
+---
+
+# Strict Equality (===)
+
+Strict equality compares:
+
+- Value
+- Data Type
+
+Example
+
+```javascript
+console.log(5 === "5");
+```
+
+Output
+
+```
+false
+```
+
+Because
+
+```
+Number
+
+≠
+
+String
+```
+
+---
+
+Another example
+
+```javascript
+console.log(5 === 5);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+# Which One Should You Use?
+
+Always prefer
+
+```javascript
+===
+```
+
+Modern JavaScript projects almost always use strict equality to avoid unexpected type coercion.
+
+---
+
+# Not Equal (!=)
+
+```javascript
+console.log(5 != 10);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+Again, type coercion happens.
+
+```javascript
+console.log(5 != "5");
+```
+
+Output
+
+```
+false
+```
+
+---
+
+# Strict Not Equal (!==)
+
+Checks both value and type.
+
+```javascript
+console.log(5 !== "5");
+```
+
+Output
+
+```
+true
+```
+
+---
+
+# Greater Than (>)
+
+```javascript
+console.log(20 > 10);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+# Less Than (<)
+
+```javascript
+console.log(5 < 2);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+# Greater Than or Equal (>=)
+
+```javascript
+console.log(18 >= 18);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+# Less Than or Equal (<=)
+
+```javascript
+console.log(8 <= 20);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+# Summary
+
+| Operator | Meaning |
+|----------|---------|
+| == | Loose Equality |
+| === | Strict Equality |
+| != | Loose Not Equal |
+| !== | Strict Not Equal |
+| > | Greater Than |
+| < | Less Than |
+| >= | Greater Than or Equal |
+| <= | Less Than or Equal |
+
+---
+
+# Logical Operators
+
+Exactly like Python and C++.
+
+| Python | C++ | JavaScript |
+|---------|------|------------|
+| and | && | && |
+| or | || | || |
+| not | ! | ! |
+
+---
+
+# Logical AND (&&)
+
+Returns true only if every condition is true.
+
+```javascript
+const loggedIn = true;
+const isAdmin = true;
+
+console.log(loggedIn && isAdmin);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+Example
+
+```javascript
+true && false
+```
+
+Output
+
+```
+false
+```
+
+---
+
+Real-world example
+
+```javascript
+if (loggedIn && hasPermission) {
+
+    console.log("Access Granted");
+
+}
+```
+
+---
+
+# Logical OR (||)
+
+Only one condition needs to be true.
+
+```javascript
+console.log(true || false);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+Example
+
+```javascript
+const isAdmin = false;
+const isOwner = true;
+
+if (isAdmin || isOwner) {
+
+    console.log("Allowed");
+
+}
+```
+
+---
+
+# Logical NOT (!)
+
+Reverses a Boolean value.
+
+```javascript
+console.log(!true);
+```
+
+Output
+
+```
+false
+```
+
+---
+
+```javascript
+console.log(!false);
+```
+
+Output
+
+```
+true
+```
+
+---
+
+# Short-Circuit Evaluation
+
+JavaScript stops evaluating expressions as soon as the result is known.
+
+---
+
+## AND (&&)
+
+```javascript
+false && anything
+```
+
+JavaScript immediately returns
+
+```
+false
+```
+
+because the whole expression can never become true.
+
+---
+
+## OR (||)
+
+```javascript
+true || anything
+```
+
+JavaScript immediately returns
+
+```
+true
+```
+
+because one true value is enough.
+
+---
+
+# Practical Example
+
+Instead of
+
+```javascript
+if(user !== null){
+
+    console.log(user.name);
+
+}
+```
+
+Modern JavaScript often uses short-circuiting:
+
+```javascript
+user && console.log(user.name);
+```
+
+If `user` is `null`, the second part is never executed.
+
+---
+
+# Using || for Default Values
+
+Example
+
+```javascript
+let username = "";
+
+let displayName = username || "Guest";
+
+console.log(displayName);
+```
+
+Output
+
+```
+Guest
+```
+
+This works because an empty string is a falsy value.
+
+> **Note:** In modern JavaScript, the nullish coalescing operator (`??`) is often a better choice when you only want to replace `null` or `undefined`. We'll cover it in a later module.
+
+---
+
+# Operator Precedence
+
+```javascript
+true || false && false
+```
+
+JavaScript evaluates
+
+```
+&&
+
+before
+
+||
+```
+
+Always use parentheses when the expression becomes difficult to read.
+
+---
+
+# Common Mistakes
+
+## Mistake 1
+
+Using
+
+```javascript
+==
+```
+
+instead of
+
+```javascript
+===
+```
+
+---
+
+## Mistake 2
+
+Comparing different types unintentionally.
+
+```javascript
+5 == "5"
+```
+
+Avoid relying on automatic type conversion.
+
+---
+
+## Mistake 3
+
+Writing long Boolean expressions without grouping.
+
+Instead of
+
+```javascript
+a && b || c && d
+```
+
+Prefer
+
+```javascript
+(a && b) || (c && d)
+```
+
+This makes the intent much clearer.
+
+---
+
+# DevSecOps Connection
+
+Boolean logic appears everywhere in automation.
+
+Examples:
+
+### CI/CD
+
+```javascript
+if (testsPassed && securityScanPassed) {
+    deploy();
+}
+```
+
+---
+
+### API Authentication
+
+```javascript
+if (token && isValidToken) {
+    allowAccess();
+}
+```
+
+---
+
+### Configuration Validation
+
+```javascript
+if (!process.env.API_KEY) {
+    console.error("Missing API Key");
+}
+```
+
+---
+
+### File Validation
+
+```javascript
+if (fileExists && hasPermission) {
+    readFile();
+}
+```
+
+---
+
+# Mini Project
+
+Create:
+
+```
+eligibility.js
+```
+
+Store:
+
+- Age
+- Has ID
+- Is Citizen
+
+Print whether the person is eligible to vote using logical operators.
+
+---
+
+# Practice Questions
+
+1. Difference between `==` and `===`?
+2. Why is `===` preferred?
+3. Difference between `!=` and `!==`?
+4. What does `&&` do?
+5. What does `||` do?
+6. What does `!` do?
+7. What is short-circuit evaluation?
+8. Why should you use parentheses in complex expressions?
+9. Give one DevSecOps example using logical operators.
+10. What happens when comparing `5 == "5"` and `5 === "5"`?
+
+---
+
+# Chapter Progress
+
+✅ Completed
+
+- Comparison Operators
+- Strict vs Loose Equality
+- Logical Operators
+- Short-Circuit Evaluation
+- Practical DevSecOps Examples
+
+---
+
+# Coming Next
+
+**Part 3 – Advanced Operators & Expressions**
+
+Topics:
+
+- Ternary Operator (`? :`)
+- Nullish Coalescing (`??`)
+- Optional Chaining (`?.`)
+- Operator Precedence (Advanced)
+- Expressions vs Statements
+- Mini Calculator Project
+- Interview Questions
+- Chapter 3 Revision Sheet
