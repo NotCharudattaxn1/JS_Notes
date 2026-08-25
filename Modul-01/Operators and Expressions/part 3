@@ -1,0 +1,694 @@
+# Module 1 - JavaScript Fundamentals
+
+# Chapter 3 - Operators and Expressions (Part 3)
+
+> **Level:** Beginner → Intermediate
+>
+> **Prerequisites**
+>
+> - Python Basics
+> - C++ Basics
+> - Chapter 3 Part 1 & Part 2
+
+---
+
+# Learning Objectives
+
+After completing this chapter, you will be able to:
+
+- Use the ternary operator
+- Understand Nullish Coalescing (`??`)
+- Use Optional Chaining (`?.`)
+- Distinguish between expressions and statements
+- Understand modern JavaScript coding style
+- Read production Node.js code comfortably
+
+---
+
+# Python/C++ → JavaScript Migration
+
+| Python | C++ | JavaScript |
+|---------|------|------------|
+| `x if cond else y` | `cond ? x : y` | `cond ? x : y` |
+
+---
+
+# Ternary Operator
+
+The ternary operator is a shorter form of `if...else`.
+
+Syntax
+
+```javascript
+condition ? valueIfTrue : valueIfFalse;
+```
+
+---
+
+## Example
+
+Instead of writing
+
+```javascript
+let age = 20;
+
+let status;
+
+if (age >= 18) {
+
+    status = "Adult";
+
+} else {
+
+    status = "Minor";
+
+}
+```
+
+You can write
+
+```javascript
+const age = 20;
+
+const status = age >= 18 ? "Adult" : "Minor";
+
+console.log(status);
+```
+
+Output
+
+```
+Adult
+```
+
+---
+
+# When Should You Use It?
+
+Good
+
+```javascript
+const role = isAdmin ? "Admin" : "User";
+```
+
+Avoid
+
+```javascript
+const result =
+condition1
+? value1
+: condition2
+? value2
+: condition3
+? value3
+: value4;
+```
+
+Nested ternary operators quickly become difficult to read.
+
+---
+
+# Expressions vs Statements
+
+Many developers confuse these.
+
+---
+
+## Statement
+
+A statement performs an action.
+
+Example
+
+```javascript
+if (age > 18) {
+
+    console.log("Adult");
+
+}
+```
+
+---
+
+## Expression
+
+An expression produces a value.
+
+Example
+
+```javascript
+age > 18
+```
+
+Produces
+
+```
+true
+
+or
+
+false
+```
+
+Another example
+
+```javascript
+10 + 20
+```
+
+Produces
+
+```
+30
+```
+
+The ternary operator is also an expression because it returns a value.
+
+---
+
+# Logical Assignment Operators
+
+Modern JavaScript introduced assignment operators based on logical operators.
+
+---
+
+## OR Assignment (||=)
+
+Old style
+
+```javascript
+if (!username) {
+
+    username = "Guest";
+
+}
+```
+
+Modern style
+
+```javascript
+username ||= "Guest";
+```
+
+If `username` is falsy, `"Guest"` is assigned.
+
+---
+
+## AND Assignment (&&=)
+
+Example
+
+```javascript
+isLoggedIn &&= hasPermission;
+```
+
+This assigns a new value only if the left side is truthy.
+
+You'll see this occasionally in modern JavaScript, but it's less common than `||=`.
+
+---
+
+# Nullish Coalescing (??)
+
+One of the most useful operators in Node.js.
+
+Many beginners confuse it with `||`.
+
+---
+
+## Problem with ||
+
+Consider
+
+```javascript
+const port = 0;
+
+const value = port || 3000;
+```
+
+Output
+
+```
+3000
+```
+
+Why?
+
+Because
+
+```
+0
+
+↓
+
+Falsy
+```
+
+JavaScript replaces it.
+
+Sometimes this is not what you want.
+
+---
+
+## Using ??
+
+```javascript
+const port = 0;
+
+const value = port ?? 3000;
+```
+
+Output
+
+```
+0
+```
+
+Why?
+
+`??` only replaces
+
+```
+null
+
+or
+
+undefined
+```
+
+It does **not** replace valid values such as:
+
+- 0
+- false
+- ""
+- NaN
+
+---
+
+# || vs ??
+
+| Value | `||` | `??` |
+|--------|------|------|
+| `0` | Default value | Keeps `0` |
+| `false` | Default value | Keeps `false` |
+| `""` | Default value | Keeps empty string |
+| `null` | Default value | Default value |
+| `undefined` | Default value | Default value |
+
+---
+
+# Which One Should You Use?
+
+Use `||`
+
+When every falsy value should be replaced.
+
+Example
+
+```javascript
+const name = input || "Guest";
+```
+
+---
+
+Use `??`
+
+When only `null` or `undefined` should be replaced.
+
+Example
+
+```javascript
+const timeout = config.timeout ?? 5000;
+```
+
+This is very common in Node.js applications.
+
+---
+
+# Optional Chaining (?.)
+
+Another modern JavaScript feature.
+
+Without optional chaining
+
+```javascript
+console.log(user.address.city);
+```
+
+If `address` is missing
+
+```
+TypeError
+```
+
+---
+
+Using Optional Chaining
+
+```javascript
+console.log(user?.address?.city);
+```
+
+If a property doesn't exist
+
+Result
+
+```
+undefined
+```
+
+No error occurs.
+
+---
+
+# Why Is This Useful?
+
+Working with APIs.
+
+Example response
+
+```javascript
+const response = {
+
+    name: "Max"
+
+};
+```
+
+This property doesn't exist
+
+```javascript
+response.address.city
+```
+
+Error
+
+Instead
+
+```javascript
+response.address?.city
+```
+
+Output
+
+```
+undefined
+```
+
+Much safer.
+
+---
+
+# Combining ?? and ?.
+
+Example
+
+```javascript
+const city = user?.address?.city ?? "Unknown";
+
+console.log(city);
+```
+
+If anything is missing
+
+Output
+
+```
+Unknown
+```
+
+This pattern is extremely common in production code.
+
+---
+
+# Operator Precedence
+
+When expressions become complex, use parentheses.
+
+Instead of
+
+```javascript
+a || b && c ?? d
+```
+
+Write
+
+```javascript
+(a || b) && (c ?? d)
+```
+
+Even if JavaScript can evaluate it correctly, explicit grouping makes your intent much clearer.
+
+---
+
+# Real DevSecOps Examples
+
+---
+
+## Environment Variables
+
+```javascript
+const port = process.env.PORT ?? 3000;
+```
+
+If `PORT` isn't defined
+
+```
+3000
+```
+
+is used.
+
+---
+
+## Reading Configuration
+
+```javascript
+const timeout =
+config?.network?.timeout ?? 5000;
+```
+
+---
+
+## API Responses
+
+```javascript
+const username =
+response?.user?.name ?? "Unknown User";
+```
+
+---
+
+## Deployment Script
+
+```javascript
+const region =
+process.env.AWS_REGION ?? "ap-south-1";
+```
+
+---
+
+# Common Mistakes
+
+### Mistake 1
+
+Using
+
+```javascript
+||
+```
+
+when
+
+```javascript
+??
+```
+
+is needed.
+
+---
+
+### Mistake 2
+
+Using optional chaining everywhere.
+
+Example
+
+```javascript
+user?.name
+```
+
+If you know `user` always exists
+
+Simply write
+
+```javascript
+user.name
+```
+
+Optional chaining should be used when values may legitimately be missing.
+
+---
+
+### Mistake 3
+
+Writing nested ternary operators.
+
+Avoid code that's difficult to understand.
+
+---
+
+# Best Practices
+
+✔ Prefer `===`
+
+✔ Prefer `??` over `||` when dealing with configuration values
+
+✔ Use Optional Chaining when reading API responses
+
+✔ Avoid nested ternary operators
+
+✔ Keep expressions readable
+
+---
+
+# Mini Project
+
+Create
+
+```
+config.js
+```
+
+Requirements
+
+```javascript
+const config = {
+
+    appName: "DevSecOps Toolkit",
+
+    port: null,
+
+    logging: {
+
+        enabled: true
+
+    }
+
+};
+```
+
+Print
+
+- App Name
+- Port (default to 3000)
+- Logging Status
+- Theme (default "Light")
+
+Use
+
+- `?.`
+- `??`
+
+---
+
+# Interview Questions
+
+### Q1
+
+Difference between
+
+```javascript
+||
+
+and
+
+??
+```
+
+---
+
+### Q2
+
+What is Optional Chaining?
+
+---
+
+### Q3
+
+Why is Optional Chaining useful?
+
+---
+
+### Q4
+
+When should you use the ternary operator?
+
+---
+
+### Q5
+
+Difference between expressions and statements?
+
+---
+
+# Chapter 3 Revision
+
+You now know
+
+✔ Arithmetic Operators
+
+✔ Assignment Operators
+
+✔ Unary Operators
+
+✔ Comparison Operators
+
+✔ Logical Operators
+
+✔ Strict Equality
+
+✔ Short-Circuit Evaluation
+
+✔ Ternary Operator
+
+✔ Optional Chaining
+
+✔ Nullish Coalescing
+
+✔ Expressions vs Statements
+
+---
+
+# DevSecOps Note
+
+These modern operators are used heavily in:
+
+- Node.js applications
+- Express.js
+- AWS SDK
+- Azure SDK
+- GitHub Actions
+- Docker automation
+- Kubernetes automation
+- REST APIs
+
+If you become comfortable with `??` and `?.`, you'll find production JavaScript code much easier to read.
+
+---
+
+# Next Chapter
+
+## Chapter 4 – User Input & Console
+
+Topics include:
+
+- `console.log()`
+- `console.error()`
+- `console.table()`
+- `console.time()`
+- `process.argv`
+- `readline`
+- User interaction
+- Command-line arguments
+- Building CLI tools
